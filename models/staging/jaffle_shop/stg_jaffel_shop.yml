@@ -1,0 +1,50 @@
+version: 2
+sources:
+  - name: jaffle
+    database: dbt_db
+    schema: dbt_schema
+    tables:
+      - name: RAW_CUSTOMERS
+      - name: RAW_ORDERS
+        freshness: 
+          error_after:
+            count: 2
+            period: day
+          warn_after:
+            count: 1
+            period: day
+        loaded_at_field: _etl_loaded_at
+        
+
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                - "returned"
+                - "completed"
+                - return_pending
+                - placed
+                - shipped
+                
+
+  
+ 
+# completed
+# returned
+# return_pending
+# placed
+# shipped
