@@ -6,7 +6,16 @@ sources:
     tables:
       - name: RAW_CUSTOMERS
       - name: RAW_ORDERS
-      - name: RAW_PAYMENTS
+        freshness: 
+          error_after:
+            count: 2
+            period: day
+          warn_after:
+            count: 1
+            period: day
+        loaded_at_field: _etl_loaded_at
+        
+
 
 models:
   - name: stg_customers

@@ -5,7 +5,7 @@ with payments as
         status,
          truncate(amount/100) as amount,
          created as created_at
-    from {{source('jaffle','RAW_PAYMENTS')}}
+    from {{source('stripe','RAW_PAYMENTS')}}
 
 )
 select * from payments
