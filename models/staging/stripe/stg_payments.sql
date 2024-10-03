@@ -3,7 +3,7 @@ with payments as
     select id as payment_id,
         order_id ,
         status,
-         truncate(amount/100) as amount,
+         {{  to_dollars('amount') }} as amount,
          created as created_at
     from {{source('stripe','RAW_PAYMENTS')}}
 
